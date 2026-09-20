@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0a0a0d">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Chrono">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Study Chrono</title>
+<style>
+:root{
+  --bg:#0a0a0d;
+  --surface:#111114;
+  --surface-2:#17171b;
+  --border:#232328;
+  --border-soft:#1a1a1f;
+  --text:#eeeeef;
+  --muted:#6e6e78;
+  --muted-2:#48484f;
+  --accent:#d4a24e;
+  --accent-dim:#8a6c33;
+  --accent-soft:rgba(212,162,78,0.10);
+  --long:#4e8cd4;
+  --ok:#5fb87a;
+  --review:#7c93a8;
+  --red:#d4614e;
+  --pause:#a48ad4;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;width:100%;overflow:hidden}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:'cv11','ss01';
+  letter-spacing:-0.01em;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse 700px 500px at 50% -5%,rgba(212,162,78,0.06),transparent 60%);
+  pointer-events:none;
+}
+.screen{
+  position:fixed;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:24px;opacity:0;visibility:hidden;
+  transition:opacity .35s ease,visibility .35s;
+  pointer-events:none;overflow-y:auto;
+}
+.screen.active{opacity:1;visibility:visible;pointer-events:auto}
+
+/* ---------- SETUP ---------- */
+.setup-inner{
+  width:100%;max-width:440px;
+  display:flex;flex-direction:column;gap:22px;
+  padding:20px 0;
+}
+.brand{display:flex;align-items:center;gap:14px;padding:2px 2px 6px}
+.brand-mark{
+  width:44px;height:44px;flex-shrink:0;
+  border-radius:12px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--accent);
+}
+.brand-text h1{font-size:19px;font-weight:600;letter-spacing:-0.02em;line-height:1.15}
+.brand-text p{color:var(--muted);font-size:12.5px;margin-top:2px}
+
+.config-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:2px;
+  display:flex;flex-direction:column;
+}
+.cfg-row{
+  display:flex;flex-direction:column;gap:10px;
+  padding:16px 16px;
+}
+.cfg-row + .cfg-row{border-top:1px solid var(--border-soft)}
+.cfg-row label{
+  font-size:12px;font-weight:500;
+  color:var(--muted);
+}
+.cfg-input input{
+  width:100%;background:transparent;border:none;outline:none;
+  color:var(--text);font-size:30px;font-weight:400;
+  font-variant-numeric:tabular-nums;
+  font-family:inherit;letter-spacing:-0.02em;
+  padding:2px 0;
+}
+.cfg-input input::-webkit-outer-spin-button,
+.cfg-input input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.preset-row{display:flex;gap:6px}
+.preset{
+  flex:1;background:transparent;color:var(--muted);
+  border:1px solid var(--border);border-radius:10px;
+  padding:9px 0;font-size:13px;font-family:inherit;
+  cursor:pointer;transition:all .15s;font-variant-numeric:tabular-nums;
+}
+.preset:hover{border-color:var(--muted-2);color:var(--text)}
+.preset.active{
+  background:var(--accent-soft);
+  border-color:var(--accent);color:var(--accent);
+}
+
+.adapt-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:16px 16px;
+  display:flex;flex-direction:column;gap:12px;
+}
+.adapt-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.adapt-head-l{display:flex;align-items:center;gap:8px}
+.adapt-head-l svg{color:var(--accent);flex-shrink:0}
+.adapt-title{font-size:13px;font-weight:600;color:var(--text)}
+.adapt-sub{font-size:11.5px;color:var(--muted);margin-top:1px}
+
+.mode-switch{display:flex;gap:6px}
+.mode-btn{
+  background:transparent;color:var(--muted);
+  border:1px solid var(--border);border-radius:9px;
+  padding:6px 11px;font-size:11.5px;font-family:inherit;
+  cursor:pointer;transition:all .15s;
+}
+.mode-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+
+.rail{
+  position:relative;height:20px;
+  display:flex;align-items:center;
+}
+.rail-line{
+  position:absolute;left:5px;right:5px;height:1px;
+  background:var(--border);
+}
+.rail-dot{
+  position:absolute;width:7px;height:7px;border-radius:50%;
+  background:var(--bg);border:1.5px solid var(--accent);
+  top:50%;transform:translate(-50%,-50%);
+}
+.rail-dot.long{border-color:var(--long);width:9px;height:9px}
+.rail-dot.pause{border-color:var(--pause);width:6px;height:6px;opacity:.85}
+
+.rail-caption{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted)}
+.rail-caption b{color:var(--text);font-weight:500}
+
+.custom-breaks{display:none;flex-direction:column;gap:10px}
+.custom-breaks.show{display:flex}
+.mini-row{display:flex;align-items:center;gap:10px}
+.mini-label{font-size:12px;color:var(--muted);flex:1}
+.stepper{display:flex;align-items:center;gap:0;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.stepper button{
+  width:28px;height:28px;background:var(--surface-2);border:none;color:var(--text);
+  font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+}
+.stepper button:active{background:var(--border)}
+.stepper span{
+  min-width:38px;text-align:center;font-size:13px;font-variant-numeric:tabular-nums;color:var(--text);
+}
+
+.pause-note{
+  display:flex;align-items:center;gap:8px;
+  font-size:11.5px;color:var(--muted);
+  padding-top:2px;
+}
+.pause-note svg{color:var(--pause);flex-shrink:0}
+.pause-note b{color:var(--text);font-weight:500}
+
+.btn-primary{
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  background:var(--accent);
+  color:#181209;border:none;border-radius:13px;
+  padding:16px 20px;font-size:15px;font-weight:600;
+  font-family:inherit;cursor:pointer;
+  letter-spacing:0.01em;
+  transition:transform .15s,filter .2s;
+}
+.btn-primary:hover{filter:brightness(1.08)}
+.btn-primary:active{transform:scale(.985)}
+
+/* ---------- FOCUS / BREAK / REVIEW ---------- */
+.focus-inner{
+  width:100%;max-width:440px;
+  display:flex;flex-direction:column;align-items:center;gap:26px;
+  padding:20px 0;
+}
+.mode-tag{
+  font-size:11.5px;
+  color:var(--accent);font-weight:600;
+  padding:6px 14px;border-radius:999px;
+  border:1px solid rgba(212,162,78,0.28);
+  background:rgba(212,162,78,0.07);
+  transition:all .3s;
+  display:flex;align-items:center;gap:7px;
+}
+.mode-tag.break-tag{color:var(--ok);border-color:rgba(95,184,122,0.28);background:rgba(95,184,122,0.07)}
+.mode-tag.break-tag.long{color:var(--long);border-color:rgba(78,140,212,0.28);background:rgba(78,140,212,0.07)}
+.mode-tag.review-tag{color:var(--review);border-color:rgba(124,147,168,0.28);background:rgba(124,147,168,0.07)}
+.mode-tag.pause-tag{color:var(--pause);border-color:rgba(164,138,212,0.28);background:rgba(164,138,212,0.07)}
+
+.timer-wrap{
+  position:relative;
+  width:min(290px,70vw);height:min(290px,70vw);
+}
+.timer-wrap svg{width:100%;height:100%;display:block;transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:var(--border);stroke-width:3}
+.ring-fg{
+  fill:none;stroke:var(--accent);stroke-width:3;
+  stroke-linecap:round;
+  transition:stroke-dashoffset .95s linear,stroke .4s ease;
+}
+.ring-fg.break-ring{stroke:var(--ok)}
+.ring-fg.break-ring.long{stroke:var(--long)}
+.ring-fg.review-ring{stroke:var(--review)}
+.ring-fg.overtime{stroke:var(--red)}
+.ring-fg.paused{stroke:var(--pause)}
+.timer-content{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:4px;
+}
+.timer-time{
+  font-size:clamp(50px,13.5vw,74px);
+  font-weight:300;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-0.04em;
+  line-height:1;
+  color:var(--text);
+  transition:color .3s;
+}
+.timer-time.overtime{color:var(--red)}
+.timer-time.paused{color:var(--pause)}
+.timer-sub{
+  font-size:11.5px;
+  color:var(--muted);font-weight:500;
+  height:15px;
+}
+
+.q-line{
+  display:flex;align-items:baseline;gap:12px;
+}
+.q-label{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:500;
+}
+.q-num{
+  font-size:30px;font-weight:400;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-0.02em;
+  display:inline-block;
+  min-width:56px;text-align:center;
+}
+.q-num.pop{animation:qPop .5s cubic-bezier(.22,1,.36,1)}
+@keyframes qPop{
+  0%{transform:translateY(-25%) scale(.85);opacity:0}
+  55%{transform:translateY(0) scale(1.03);opacity:1}
+  100%{transform:translateY(0) scale(1)}
+}
+.q-total{font-size:15px;color:var(--muted);font-variant-numeric:tabular-nums}
+
+.actions{display:flex;gap:9px;width:100%;max-width:360px}
+.act{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:7px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--text);border-radius:13px;
+  padding:13px 10px;font-size:13.5px;font-weight:500;
+  font-family:inherit;cursor:pointer;
+  transition:all .15s;
+}
+.act:hover{border-color:var(--muted-2);background:var(--surface-2)}
+.act:active{transform:scale(.97)}
+.act:disabled{opacity:.35;cursor:default;pointer-events:none}
+.act-skip{color:var(--muted)}
+.act-skip:hover{color:var(--text)}
+.act-done{
+  background:rgba(212,162,78,0.12);
+  border-color:rgba(212,162,78,0.32);
+  color:var(--accent);
+}
+.act-done:hover{border-color:var(--accent);filter:brightness(1.1)}
+.act-pause{
+  color:var(--pause);
+  flex:0 0 auto;width:52px;padding:13px 0;
+}
+.act-pause:hover{border-color:var(--pause)}
+.pause-dots{display:flex;gap:3px;margin-top:3px}
+.pause-dot{width:4px;height:4px;border-radius:50%;background:var(--muted-2)}
+.pause-dot.used{background:var(--pause);opacity:.35}
+
+.progress-rail{
+  position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:var(--border);
+}
+.progress-fill{
+  height:100%;width:0%;
+  background:var(--accent);
+  transition:width .5s cubic-bezier(.22,1,.36,1);
+}
+
+.break-msg{
+  font-size:13.5px;color:var(--muted);
+  text-align:center;max-width:320px;
+  line-height:1.5;
+}
+
+.pause-banner{
+  position:fixed;top:0;left:0;right:0;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:10px;font-size:12px;color:var(--pause);
+  background:rgba(164,138,212,0.08);
+  border-bottom:1px solid rgba(164,138,212,0.2);
+  opacity:0;transform:translateY(-100%);
+  transition:all .25s;
+  pointer-events:none;
+}
+.pause-banner.show{opacity:1;transform:translateY(0)}
+
+/* ---------- REPORT ---------- */
+.report-inner{
+  width:100%;max-width:480px;
+  display:flex;flex-direction:column;gap:22px;
+  padding:36px 0 20px;
+}
+.report-header{
+  display:flex;align-items:center;gap:12px;
+  color:var(--text);
+}
+.report-header-mark{
+  width:38px;height:38px;flex-shrink:0;
+  border-radius:11px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--accent);
+}
+.report-header h2{font-size:19px;font-weight:600;letter-spacing:-0.02em}
+.report-header p{font-size:12px;color:var(--muted);margin-top:1px}
+
+.metrics{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:7px;
+}
+.metric{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:13px;
+  padding:13px 12px;
+  display:flex;flex-direction:column;gap:5px;
+}
+.metric-label{
+  font-size:10.5px;
+  color:var(--muted);font-weight:500;
+}
+.metric-value{
+  font-size:19px;font-weight:500;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-0.02em;
+  color:var(--text);
+}
+.metric-value small{font-size:11px;color:var(--muted);font-weight:400;margin-left:2px}
+
+.insights-head{display:flex;align-items:center;justify-content:space-between}
+.insights-head span{font-size:12px;color:var(--muted)}
+.insights{display:flex;flex-direction:column;gap:9px}
+.insight{
+  display:flex;gap:13px;align-items:flex-start;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:15px;
+  transition:border-color .2s;
+}
+.insight-icon{
+  flex-shrink:0;width:30px;height:30px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:9px;
+  background:var(--accent-soft);
+  color:var(--accent);
+}
+.insight-icon.good{background:rgba(95,184,122,0.10);color:var(--ok)}
+.insight-icon.warn{background:rgba(78,140,212,0.10);color:var(--long)}
+.insight-icon.alert{background:rgba(212,97,78,0.10);color:var(--red)}
+.insight-icon.info{background:rgba(124,147,168,0.10);color:var(--review)}
+.insight-body{display:flex;flex-direction:column;gap:3px;flex:1}
+.insight-title{font-size:13px;font-weight:600;color:var(--text);letter-spacing:-0.005em}
+.insight-text{font-size:12.5px;line-height:1.5;color:var(--muted)}
+
+@media (max-width:420px){
+  .metrics{grid-template-columns:repeat(2,1fr)}
+  .timer-time{font-size:54px}
+}
+</style>
+</head>
+<body>
+
+<div class="pause-banner" id="pauseBanner">
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+  <span id="pauseBannerText">Paused</span>
+</div>
+
+<!-- ============ SETUP ============ -->
+<div class="screen active" id="screen-setup">
+  <div class="setup-inner">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 7v5l3.2 2"/>
+          <path d="M9 2h6"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1>Study Chrono</h1>
+        <p>Timed practice with adaptive breaks</p>
+      </div>
+    </div>
+
+    <div class="config-card">
+      <div class="cfg-row">
+        <label>Number of tests</label>
+        <div class="cfg-input">
+          <input type="number" id="inpTests" value="200" min="1" max="5000" inputmode="numeric">
+        </div>
+      </div>
+      <div class="cfg-row">
+        <label>Seconds per test</label>
+        <div class="preset-row">
+          <button class="preset" data-sec="30">30s</button>
+          <button class="preset active" data-sec="60">60s</button>
+          <button class="preset" data-sec="90">90s</button>
+          <button class="preset" data-sec="120">2m</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="adapt-card">
+      <div class="adapt-head">
+        <div class="adapt-head-l">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/><circle cx="12" cy="12" r="4"/></svg>
+          <div>
+            <div class="adapt-title">Break schedule</div>
+            <div class="adapt-sub" id="adaptSub">Scaled automatically to test count</div>
+          </div>
+        </div>
+        <div class="mode-switch">
+          <button class="mode-btn active" data-mode="auto">Auto</button>
+          <button class="mode-btn" data-mode="custom">Custom</button>
+        </div>
+      </div>
+
+      <div class="rail" id="previewRail"><div class="rail-line"></div></div>
+      <div class="rail-caption">
+        <span id="previewCount">—</span>
+        <span id="previewTypes">—</span>
+      </div>
+
+      <div class="custom-breaks" id="customBreaks">
+        <div class="mini-row">
+          <span class="mini-label">Tests between short breaks</span>
+          <div class="stepper">
+            <button data-adj="shortEvery" data-d="-5">–</button>
+            <span id="valShortEvery">40</span>
+            <button data-adj="shortEvery" data-d="5">+</button>
+          </div>
+        </div>
+        <div class="mini-row">
+          <span class="mini-label">Short break length (min)</span>
+          <div class="stepper">
+            <button data-adj="shortLen" data-d="-1">–</button>
+            <span id="valShortLen">5</span>
+            <button data-adj="shortLen" data-d="1">+</button>
+          </div>
+        </div>
+        <div class="mini-row">
+          <span class="mini-label">Long break every N short breaks</span>
+          <div class="stepper">
+            <button data-adj="longEvery" data-d="-1">–</button>
+            <span id="valLongEvery">3</span>
+            <button data-adj="longEvery" data-d="1">+</button>
+          </div>
+        </div>
+        <div class="mini-row">
+          <span class="mini-label">Long break length (min)</span>
+          <div class="stepper">
+            <button data-adj="longLen" data-d="-5">–</button>
+            <span id="valLongLen">20</span>
+            <button data-adj="longLen" data-d="5">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pause-note">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+        <span id="pauseNoteText"><b>2 pauses</b> available · 1 min each, mid‑question</span>
+      </div>
+    </div>
+
+    <button class="btn-primary" id="beginBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+        <path d="M6 4l14 8-14 8z"/>
+      </svg>
+      Begin session
+    </button>
+  </div>
+</div>
+
+<!-- ============ FOCUS ============ -->
+<div class="screen" id="screen-focus">
+  <div class="focus-inner">
+    <div class="mode-tag" id="focusTag">Focus</div>
+
+    <div class="timer-wrap">
+      <svg viewBox="0 0 200 200">
+        <circle class="ring-bg" cx="100" cy="100" r="90"/>
+        <circle class="ring-fg" id="ring" cx="100" cy="100" r="90"/>
+      </svg>
+      <div class="timer-content">
+        <div class="timer-time" id="timeDisplay">1:00</div>
+        <div class="timer-sub" id="timerSub"></div>
+      </div>
+    </div>
+
+    <div class="q-line">
+      <span class="q-label">Question</span>
+      <span class="q-num" id="qnum">1</span>
+      <span class="q-total">of <span id="qtotal">200</span></span>
+    </div>
+
+    <div class="actions">
+      <button class="act act-skip" id="skipBtn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 4l10 8-10 8z"/><path d="M19 4v16"/>
+        </svg>
+        Skip
+      </button>
+      <button class="act act-pause" id="pauseBtn" title="Pause">
+        <div>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+          <div class="pause-dots" id="pauseDots"></div>
+        </div>
+      </button>
+      <button class="act act-done" id="doneBtn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12l5 5 9-11"/>
+        </svg>
+        Done
+      </button>
+    </div>
+  </div>
+  <div class="progress-rail"><div class="progress-fill" id="progFill"></div></div>
+</div>
+
+<!-- ============ BREAK ============ -->
+<div class="screen" id="screen-break">
+  <div class="focus-inner">
+    <div class="mode-tag break-tag" id="breakTag">Short break</div>
+
+    <div class="timer-wrap">
+      <svg viewBox="0 0 200 200">
+        <circle class="ring-bg" cx="100" cy="100" r="90"/>
+        <circle class="ring-fg break-ring" id="breakRing" cx="100" cy="100" r="90"/>
+      </svg>
+      <div class="timer-content">
+        <div class="timer-time" id="breakTime">5:00</div>
+        <div class="timer-sub">breathe</div>
+      </div>
+    </div>
+
+    <div class="break-msg" id="breakMsg">Stand up, look far away, hydrate.</div>
+
+    <div class="actions">
+      <button class="act act-skip" id="skipBreakBtn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 4l10 8-10 8z"/><path d="M19 4v16"/>
+        </svg>
+        Skip break
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ REVIEW ============ -->
+<div class="screen" id="screen-review">
+  <div class="focus-inner">
+    <div class="mode-tag review-tag">Review</div>
+
+    <div class="timer-wrap">
+      <svg viewBox="0 0 200 200">
+        <circle class="ring-bg" cx="100" cy="100" r="90"/>
+        <circle class="ring-fg review-ring" id="reviewRing" cx="100" cy="100" r="90"/>
+      </svg>
+      <div class="timer-content">
+        <div class="timer-time" id="reviewTime">6:00</div>
+        <div class="timer-sub" id="reviewSub"></div>
+      </div>
+    </div>
+
+    <div class="break-msg">Consolidation is where memory forms.</div>
+
+    <div class="actions">
+      <button class="act act-done" id="skipReviewBtn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12l5 5 9-11"/>
+        </svg>
+        Finish review
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ REPORT ============ -->
+<div class="screen" id="screen-report">
+  <div class="report-inner">
+    <div class="report-header">
+      <div class="report-header-mark">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 20h16"/><path d="M7 20V10"/><path d="M12 20V4"/><path d="M17 20v-7"/>
+        </svg>
+      </div>
+      <div>
+        <h2>Session report</h2>
+        <p id="reportSub">—</p>
+      </div>
+    </div>
+
+    <div class="metrics" id="metrics"></div>
+
+    <div>
+      <div class="insights-head"><span>Session analysis</span></div>
+      <div class="insights" id="insights" style="margin-top:9px"></div>
+    </div>
+
+    <button class="btn-primary" id="restartBtn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/>
+      </svg>
+      New session
+    </button>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   Study Chrono — logic
+   ============================================================ */
+
+const $  = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const C  = 2 * Math.PI * 90;
+
+const state = {
+  tests: 200,
+  perTest: 60,
+  breaks: [],
+  breakMode: 'auto',
+  customCfg: { shortEvery: 40, shortLen: 5, longEvery: 3, longLen: 20 },
+  currentQ: 0,
+  currentAllocated: 0,
+  timeLeft: 0,
+  bonus: 0,
+  records: [],
+  skipped: 0,
+  timeouts: 0,
+  totalBonus: 0,
+  sessionStart: 0,
+  sessionEnd: 0,
+  reviewTime: 0,
+  reviewLeft: 0,
+  breakRemaining: 0,
+  tick: null,
+  phase: 'setup',
+  // pause
+  pausesAllowed: 2,
+  pausesUsed: 0,
+  pauseLeft: 0,
+  isPaused: false,
+  prePauseTimeLeft: 0,
+};
+
+/* ---------- Smart break planner ----------
+   Adapts break count and pause allowance to session size:
+     < 45 tests   → no scheduled breaks (session is short enough)
+     45–150       → light rhythm, fewer/shorter breaks
+     150–600      → standard rhythm (~every 45-55 tests)
+     600+         → denser rhythm, breaks scale sub-linearly so
+                    a 1000-test run isn't 20x the breaks of a 200-test one
+   Every 3rd break is promoted to a long (20 min) break to mirror
+   how sustained attention actually degrades over a long session.
+-------------------------------------------- */
+function computeBreaks(n){
+  if (state.breakMode === 'custom'){
+    return computeCustomBreaks(n);
+  }
+  if (n < 45) return [];
+  let b = Math.max(1, Math.round(4 * Math.pow(n / 200, 0.72)));
+  b = Math.min(b, Math.floor(n / 30));
+  if (b < 1) return [];
+  const spacing = n / (b + 1);
+  const arr = [];
+  for (let i = 1; i <= b; i++){
+    const at = Math.round(spacing * i);
+    const isLong = (i % 3 === 0);
+    arr.push({ at, isLong, duration: isLong ? 1200 : 300 });
+  }
+  return arr;
+}
+
+function computeCustomBreaks(n){
+  const c = state.customCfg;
+  const every = Math.max(5, c.shortEvery);
+  const count = Math.floor(n / every);
+  const arr = [];
+  for (let i = 1; i <= count; i++){
+    const at = i * every;
+    if (at >= n) break;
+    const isLong = c.longEvery > 0 && (i % c.longEvery === 0);
+    arr.push({ at, isLong, duration: isLong ? c.longLen * 60 : c.shortLen * 60 });
+  }
+  return arr;
+}
+
+/* ---------- Adaptive pause allowance ----------
+   Pauses are a pressure-relief valve, not a scheduling feature —
+   so the allowance scales with how much sustained attention the
+   session demands, not with a fixed default:
+     < 30 tests    → 1 pause  (short runs shouldn't need a break valve)
+     30–400 tests  → 2 pauses (standard)
+     400+ tests    → 3 pauses (long grinds get one more safety margin)
+-------------------------------------------- */
+function computePauseAllowance(n){
+  if (n < 30) return 1;
+  if (n <= 400) return 2;
+  return 3;
+}
+
+/* ---------- Ring helpers ---------- */
+function setRing(el, progress, overtime){
+  const p = Math.max(0, Math.min(1, progress));
+  el.style.strokeDasharray = C;
+  el.style.strokeDashoffset = C * (1 - p);
+  el.classList.toggle('overtime', !!overtime);
+}
+
+function resetRing(el){
+  el.style.transition = 'none';
+  el.style.strokeDasharray = C;
+  el.style.strokeDashoffset = 0;
+  requestAnimationFrame(() => { el.style.transition = ''; });
+}
+
+/* ---------- Screen management ---------- */
+function showScreen(name){
+  $$('.screen').forEach(s => s.classList.remove('active'));
+  $(`#screen-${name}`).classList.add('active');
+  state.phase = name;
+}
+
+/* ---------- Setup: mode switch ---------- */
+$$('.mode-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    $$('.mode-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.breakMode = btn.dataset.mode;
+    $('#customBreaks').classList.toggle('show', state.breakMode === 'custom');
+    $('#adaptSub').textContent = state.breakMode === 'auto'
+      ? 'Scaled automatically to test count'
+      : 'Using your custom rhythm';
+    renderPreview();
+  });
+});
+
+$$('.stepper button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const key = btn.dataset.adj;
+    const d = parseInt(btn.dataset.d);
+    const min = { shortEvery:10, shortLen:1, longEvery:0, longLen:5 }[key];
+    state.customCfg[key] = Math.max(min, state.customCfg[key] + d);
+    $(`#val${key[0].toUpperCase()}${key.slice(1)}`).textContent = state.customCfg[key];
+    renderPreview();
+  });
+});
+
+/* ---------- Setup: preview ---------- */
+function renderPreview(){
+  const n = Math.max(1, Math.min(5000, parseInt($('#inpTests').value) || 200));
+  const breaks = computeBreaks(n);
+  const rail = $('#previewRail');
+  const pauseAllowance = computePauseAllowance(n);
+
+  rail.querySelectorAll('.rail-dot').forEach(d => d.remove());
+
+  if (breaks.length === 0){
+    $('#previewCount').textContent = 'No scheduled breaks';
+    $('#previewTypes').textContent = `${n} tests`;
+  } else {
+    const longCount = breaks.filter(b => b.isLong).length;
+    const shortCount = breaks.length - longCount;
+    $('#previewCount').textContent = `${breaks.length} break${breaks.length>1?'s':''} · ~${Math.round(n/(breaks.length+1))} apart`;
+    const parts = [];
+    if (shortCount) parts.push(`${shortCount}×5m`);
+    if (longCount)  parts.push(`${longCount}×20m`);
+    $('#previewTypes').textContent = parts.join('  ·  ');
+
+    breaks.forEach(b => {
+      const dot = document.createElement('div');
+      dot.className = 'rail-dot' + (b.isLong ? ' long' : '');
+      const pct = b.at / n;
+      dot.style.left = `calc(5px + ${pct} * (100% - 10px))`;
+      dot.title = `After Q${b.at} — ${Math.round(b.duration/60)} min`;
+      rail.appendChild(dot);
+    });
+  }
+
+  $('#pauseNoteText').innerHTML = `<b>${pauseAllowance} pause${pauseAllowance>1?'s':''}</b> available · 1 min each, mid‑question`;
+}
+
+$('#inpTests').addEventListener('input', renderPreview);
+$$('.preset').forEach(btn => {
+  btn.addEventListener('click', () => {
+    $$('.preset').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    state.perTest = parseInt(btn.dataset.sec);
+    renderPreview();
+  });
+});
+
+/* ---------- Begin session ---------- */
+function beginSession(){
+  const n = Math.max(1, Math.min(5000, parseInt($('#inpTests').value) || 200));
+  state.tests = n;
+  state.perTest = state.perTest || 60;
+  state.breaks = computeBreaks(n);
+  state.currentQ = 0;
+  state.bonus = 0;
+  state.records = [];
+  state.skipped = 0;
+  state.timeouts = 0;
+  state.totalBonus = 0;
+  state.sessionStart = Date.now();
+  state.sessionEnd = 0;
+
+  state.pausesAllowed = computePauseAllowance(n);
+  state.pausesUsed = 0;
+  state.isPaused = false;
+
+  $('#qtotal').textContent = n;
+  $('#progFill').style.width = '0%';
+  renderPauseDots();
+
+  startQuestion(1);
+  showScreen('focus');
+  startTick();
+}
+
+/* ---------- Pause dots UI ---------- */
+function renderPauseDots(){
+  const wrap = $('#pauseDots');
+  wrap.innerHTML = '';
+  for (let i = 0; i < state.pausesAllowed; i++){
+    const d = document.createElement('div');
+    d.className = 'pause-dot' + (i < state.pausesUsed ? ' used' : '');
+    wrap.appendChild(d);
+  }
+  $('#pauseBtn').disabled = state.pausesUsed >= state.pausesAllowed;
+}
+
+/* ---------- Question flow ---------- */
+function startQuestion(n){
+  state.currentQ = n;
+  state.currentAllocated = state.perTest + state.bonus;
+  state.timeLeft = state.currentAllocated;
+  state.bonus = 0;
+  state.isPaused = false;
+  $('#pauseBanner').classList.remove('show');
+
+  const ring = $('#ring');
+  resetRing(ring);
+  ring.classList.remove('overtime');
+
+  const qEl = $('#qnum');
+  qEl.textContent = n;
+  qEl.classList.remove('pop');
+  void qEl.offsetWidth;
+  qEl.classList.add('pop');
+
+  $('#progFill').style.width = `${((n - 1) / state.tests) * 100}%`;
+  renderPauseDots();
+  updateFocusUI();
+}
+
+function updateFocusUI(){
+  const t = state.timeLeft;
+  const abs = Math.abs(t);
+  const m = Math.floor(abs / 60);
+  const s = abs % 60;
+  const timeEl = $('#timeDisplay');
+  const ringEl = $('#ring');
+
+  if (t >= 0){
+    timeEl.textContent = `${m}:${s.toString().padStart(2,'0')}`;
+    timeEl.classList.remove('overtime');
+    const progress = state.currentAllocated > 0 ? t / state.currentAllocated : 0;
+    setRing(ringEl, progress, false);
+  } else {
+    timeEl.textContent = `+${abs}s`;
+    timeEl.classList.add('overtime');
+    setRing(ringEl, 1, true);
+  }
+
+  const sub = $('#timerSub');
+  if (state.currentAllocated > state.perTest){
+    const extra = state.currentAllocated - state.perTest;
+    sub.textContent = `+${extra}s carried`;
+  } else {
+    sub.textContent = '';
+  }
+}
+
+function finishQuestion({ skipped, timedOut }){
+  const q = state.currentQ;
+  const remaining = Math.max(0, state.timeLeft);
+  const used = state.currentAllocated - state.timeLeft;
+
+  state.records.push({
+    q, skipped, timedOut,
+    allocated: state.currentAllocated,
+    used: Math.max(0, used),
+    remaining,
+  });
+
+  if (skipped) state.skipped++;
+  if (timedOut) state.timeouts++;
+
+  if (!skipped && !timedOut && remaining > 0){
+    state.bonus = Math.floor(remaining / 2);
+    state.totalBonus += state.bonus;
+  } else {
+    state.bonus = 0;
+  }
+
+  const brk = state.breaks.find(b => b.at === q);
+  if (brk && q < state.tests){
+    startBreak(brk);
+    return;
+  }
+
+  if (q >= state.tests){
+    endSession();
+    return;
+  }
+
+  startQuestion(q + 1);
+}
+
+/* ---------- Pause (mid-question) ---------- */
+function togglePause(){
+  if (state.phase !== 'focus') return;
+  if (state.isPaused) return;
+  if (state.pausesUsed >= state.pausesAllowed) return;
+
+  state.isPaused = true;
+  state.pausesUsed++;
+  state.pauseLeft = 60;
+  state.prePauseTimeLeft = state.timeLeft;
+
+  renderPauseDots();
+  $('#ring').classList.add('paused');
+  $('#timeDisplay').classList.add('paused');
+  $('#focusTag').classList.add('pause-tag');
+  $('#focusTag').textContent = 'Paused';
+  $('#doneBtn').disabled = true;
+  $('#skipBtn').disabled = true;
+
+  $('#pauseBannerText').textContent = `Paused · resuming in 60s`;
+  $('#pauseBanner').classList.add('show');
+}
+
+function endPause(){
+  state.isPaused = false;
+  state.timeLeft = state.prePauseTimeLeft;
+
+  $('#ring').classList.remove('paused');
+  $('#timeDisplay').classList.remove('paused');
+  $('#focusTag').classList.remove('pause-tag');
+  $('#focusTag').textContent = 'Focus';
+  $('#doneBtn').disabled = false;
+  $('#skipBtn').disabled = false;
+  $('#pauseBanner').classList.remove('show');
+
+  updateFocusUI();
+}
+
+/* ---------- Break ---------- */
+function startBreak(brk){
+  state.breakRemaining = brk.duration;
+
+  const tag = $('#breakTag');
+  tag.textContent = brk.isLong ? `Long break · ${Math.round(brk.duration/60)} min` : `Short break · ${Math.round(brk.duration/60)} min`;
+  tag.classList.toggle('long', brk.isLong);
+
+  const ring = $('#breakRing');
+  ring.classList.toggle('long', brk.isLong);
+  resetRing(ring);
+
+  $('#breakMsg').textContent = brk.isLong
+    ? 'Step away. Walk, stretch, hydrate — let your mind wander.'
+    : 'Stand up, look far away, hydrate.';
+
+  $('#progFill').style.width = `${(state.currentQ / state.tests) * 100}%`;
+
+  updateBreakUI(brk.duration);
+  showScreen('break');
+}
+
+function updateBreakUI(durOverride){
+  const t = Math.max(0, state.breakRemaining);
+  const m = Math.floor(t / 60);
+  const s = t % 60;
+  $('#breakTime').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+
+  const cur = state.breaks.find(b => b.at === state.currentQ);
+  const dur = durOverride || (cur ? cur.duration : 300);
+  setRing($('#breakRing'), t / dur);
+}
+
+function endBreak(){
+  if (state.currentQ >= state.tests){
+    endSession();
+    return;
+  }
+  startQuestion(state.currentQ + 1);
+  showScreen('focus');
+}
+
+/* ---------- Review ---------- */
+function endSession(){
+  clearInterval(state.tick);
+  state.sessionEnd = Date.now();
+
+  const items = state.skipped + state.timeouts;
+  if (items > 0){
+    state.reviewTime = Math.min(3600, items * 60);
+    state.reviewLeft = state.reviewTime;
+    $('#progFill').style.width = '100%';
+    showScreen('review');
+    resetRing($('#reviewRing'));
+    updateReviewUI();
+    startTick();
+  } else {
+    showReport();
+  }
+}
+
+function updateReviewUI(){
+  const t = Math.max(0, state.reviewLeft);
+  const m = Math.floor(t / 60);
+  const s = t % 60;
+  $('#reviewTime').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+  setRing($('#reviewRing'), t / state.reviewTime);
+
+  const items = state.skipped + state.timeouts;
+  $('#reviewSub').textContent = `${items} question${items>1?'s':''} to revisit`;
+}
+
+function endReview(){
+  clearInterval(state.tick);
+  showReport();
+}
+
+/* ---------- Tick ---------- */
+function startTick(){
+  if (state.tick) clearInterval(state.tick);
+  state.tick = setInterval(onTick, 1000);
+}
+
+function onTick(){
+  if (state.phase === 'focus'){
+    if (state.isPaused){
+      state.pauseLeft--;
+      $('#pauseBannerText').textContent = `Paused · resuming in ${Math.max(0,state.pauseLeft)}s`;
+      if (state.pauseLeft <= 0) endPause();
+      return;
+    }
+    state.timeLeft--;
+    if (state.timeLeft < -10){
+      finishQuestion({ skipped:false, timedOut:true });
+    } else {
+      updateFocusUI();
+    }
+  } else if (state.phase === 'break'){
+    state.breakRemaining--;
+    if (state.breakRemaining <= 0){
+      endBreak();
+    } else {
+      updateBreakUI();
+    }
+  } else if (state.phase === 'review'){
+    state.reviewLeft--;
+    if (state.reviewLeft <= 0){
+      endReview();
+    } else {
+      updateReviewUI();
+    }
+  }
+}
+
+/* ============================================================
+   REPORT
+   ============================================================ */
+
+const ICONS = {
+  alert: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l10 17H2z"/><path d="M12 10v4"/><circle cx="12" cy="17.5" r=".5" fill="currentColor"/></svg>`,
+  check: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M8 12l3 3 5-6"/></svg>`,
+  trendDown: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l7 7 4-4 7 7"/><path d="M21 13v4h-4"/></svg>`,
+  trendUp: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l7-7 4 4 7-7"/><path d="M21 11V7h-4"/></svg>`,
+  clock: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 7v5l3 2"/></svg>`,
+  bolt: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg>`,
+  target: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></svg>`,
+  spark: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/></svg>`,
+  pause: `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>`,
+  rest: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v10a4 4 0 0 0 4 4h3"/><path d="M9 8h9a2 2 0 0 1 2 2v1a3 3 0 0 1-3 3h-1"/><path d="M4 21h9"/></svg>`,
+};
+
+function fmtDuration(sec){
+  sec = Math.max(0, Math.round(sec));
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  if (m === 0) return `${s}s`;
+  return `${m}m ${s.toString().padStart(2,'0')}s`;
+}
+
+function showReport(){
+  clearInterval(state.tick);
+
+  const recs = state.records;
+  const attempted = recs.filter(r => !r.skipped && !r.timedOut).length;
+  const totalTime = state.sessionEnd ? (state.sessionEnd - state.sessionStart) / 1000 : 0;
+  const sumUsed = recs.reduce((a, r) => a + r.used, 0);
+  const avg = attempted > 0 ? sumUsed / attempted : (recs.length ? sumUsed / recs.length : 0);
+
+  const attemptedRecs = recs.filter(r => !r.skipped && !r.timedOut);
+  let firstThirdAvg = 0, lastThirdAvg = 0;
+  if (attemptedRecs.length >= 6){
+    const third = Math.max(1, Math.floor(attemptedRecs.length / 3));
+    const first = attemptedRecs.slice(0, third);
+    const last  = attemptedRecs.slice(-third);
+    firstThirdAvg = first.reduce((a,r) => a + r.used, 0) / first.length;
+    lastThirdAvg  = last.reduce((a,r) => a + r.used, 0) / last.length;
+  }
+
+  $('#reportSub').textContent = `${state.tests} questions · ${fmtDuration(totalTime)} total`;
+
+  const metrics = [
+    { label:'Session', value: fmtDuration(totalTime) },
+    { label:'Questions', value: recs.length },
+    { label:'Attempted', value: attempted },
+    { label:'Skipped', value: state.skipped },
+    { label:'Timeouts', value: state.timeouts },
+    { label:'Avg / q', value: avg ? `${avg.toFixed(1)}s` : '—' },
+    { label:'Breaks taken', value: state.breaks.filter(b => b.at <= state.currentQ).length },
+    { label:'Pauses used', value: `${state.pausesUsed}/${state.pausesAllowed}` },
+    { label:'Bonus reclaimed', value: fmtDuration(state.totalBonus) },
+  ];
+
+  $('#metrics').innerHTML = metrics.map(m => `
+    <div class="metric">
+      <div class="metric-label">${m.label}</div>
+      <div class="metric-value">${m.value}</div>
+    </div>
+  `).join('');
+
+  const insights = buildInsights({
+    recs, attempted, avg, totalTime,
+    firstThirdAvg, lastThirdAvg,
+    skipped: state.skipped,
+    timeouts: state.timeouts,
+    totalBonus: state.totalBonus,
+    perTest: state.perTest,
+    pausesUsed: state.pausesUsed,
+    pausesAllowed: state.pausesAllowed,
+    tests: state.tests,
+    breaksScheduled: state.breaks.length,
+  });
+
+  $('#insights').innerHTML = insights.map(i => `
+    <div class="insight">
+      <div class="insight-icon ${i.tone || ''}">${ICONS[i.icon] || ICONS.spark}</div>
+      <div class="insight-body">
+        <div class="insight-title">${i.title}</div>
+        <div class="insight-text">${i.text}</div>
+      </div>
+    </div>
+  `).join('');
+
+  $('#progFill').style.width = '100%';
+  showScreen('report');
+}
+
+/* ============================================================
+   Insights — built around test-taking psychology principles:
+   · Skip rate = calibration signal (knowing what you don't know)
+   · Pace drift across the session = fatigue vs warm-up
+   · Timeouts = "half-knowledge" zone (worth targeted drilling)
+   · Bonus time = efficiency gain worth compounding
+   · Pause usage = self-regulation signal, not just a utility
+   ============================================================ */
+function buildInsights(d){
+  const out = [];
+  const total = d.recs.length || 1;
+  const skipRate = d.skipped / total;
+  const timeoutRate = d.timeouts / total;
+
+  if (d.skipped === 0 && d.timeouts === 0){
+    out.push({
+      icon:'target', tone:'good',
+      title:'Full completion',
+      text:`You attempted every question. Great for stamina, but careful: perfect completion can hide over-investment in items you should have skipped. In real tests, strategic skipping saves minutes.`
+    });
+  } else if (skipRate > 0.25){
+    out.push({
+      icon:'alert', tone:'alert',
+      title:'High skip rate',
+      text:`${Math.round(skipRate*100)}% of questions were skipped. Skipping is a valid triage tool — but at this level it usually signals conceptual gaps, not time pressure. Review the skipped items first.`
+    });
+  } else if (skipRate > 0.05){
+    out.push({
+      icon:'check', tone:'good',
+      title:'Calibrated skipping',
+      text:`You skipped ${d.skipped} question${d.skipped>1?'s':''} — a sign you can recognise when a problem is eating time. Review them while the memory is still warm.`
+    });
+  }
+
+  if (d.firstThirdAvg && d.lastThirdAvg){
+    const ratio = d.lastThirdAvg / d.firstThirdAvg;
+    if (ratio > 1.22){
+      out.push({
+        icon:'trendDown', tone:'warn',
+        title:'Fatigue detected',
+        text:`Your pace slowed by ${Math.round((ratio-1)*100)}% in the final third. This is where careless errors cluster. Consider shorter sets or a longer break near the 70% mark.`
+      });
+    } else if (ratio < 0.85){
+      out.push({
+        icon:'trendUp', tone:'good',
+        title:'Strong finish',
+        text:`You sped up through the session — final third was ${Math.round((1-ratio)*100)}% faster. Your focus compounds; keep the warm-up short.`
+      });
+    } else {
+      out.push({
+        icon:'spark', tone:'info',
+        title:'Stable pace',
+        text:`Your speed stayed within ±${Math.round(Math.abs(1-ratio)*100)}% across the session — a hallmark of controlled, deliberate practice.`
+      });
+    }
+  }
+
+  if (d.timeouts > 0){
+    out.push({
+      icon:'clock', tone:'warn',
+      title:`${d.timeouts} question${d.timeouts>1?'s':''} timed out`,
+      text:`Timeouts usually mark "half-known" content — you recognise the topic but retrieval is slow. This zone is where focused drilling pays off most. Don't just re-read; force retrieval.`
+    });
+  }
+
+  if (d.totalBonus > 45){
+    out.push({
+      icon:'bolt', tone:'good',
+      title:'Efficiency compounds',
+      text:`Fast solves freed ${fmtDuration(d.totalBonus)} of unused time, half of which was carried forward. Speed on easy items is a real edge — protect it.`
+    });
+  } else if (d.totalBonus > 0){
+    out.push({
+      icon:'bolt', tone:'info',
+      title:'Small time savings',
+      text:`You reclaimed ${fmtDuration(d.totalBonus)} by finishing early. Half was redistributed to tougher questions — small but real leverage.`
+    });
+  }
+
+  if (d.perTest && d.avg){
+    const delta = d.avg - d.perTest;
+    if (delta < -3){
+      out.push({
+        icon:'target', tone:'good',
+        title:'Under budget',
+        text:`Average ${d.avg.toFixed(1)}s / question against a ${d.perTest}s target. You're leaving margin — try raising difficulty or reducing the timer.`
+      });
+    } else if (delta > 5){
+      out.push({
+        icon:'target', tone:'warn',
+        title:'Over budget',
+        text:`Average ${d.avg.toFixed(1)}s / question against a ${d.perTest}s target. Consider tightening the timer to force faster recognition.`
+      });
+    }
+  }
+
+  // Pause usage insight — reads intent from how/whether pauses were used
+  if (d.pausesAllowed > 0){
+    if (d.pausesUsed === 0 && total > 30){
+      out.push({
+        icon:'pause', tone:'info',
+        title:'Pauses unused',
+        text:`You had ${d.pausesAllowed} one-minute pause${d.pausesAllowed>1?'s':''} available and used none. That can mean steady composure — or reluctance to take a breather when it would have helped. Worth noticing next time you feel friction.`
+      });
+    } else if (d.pausesUsed >= d.pausesAllowed && d.pausesAllowed > 1){
+      out.push({
+        icon:'pause', tone:'warn',
+        title:'All pauses used',
+        text:`You used every available pause. That's a useful pressure valve, but reaching for it every time can mask a pacing issue rather than a one-off snag — check if the same section triggered each pause.`
+      });
+    } else {
+      out.push({
+        icon:'pause', tone:'good',
+        title:'Pauses used sparingly',
+        text:`You used ${d.pausesUsed} of ${d.pausesAllowed} pauses — reaching for the reset only when it mattered, not as a habit.`
+      });
+    }
+  }
+
+  // Break adherence — did the session's scale match its rest plan
+  if (d.breaksScheduled > 0){
+    out.push({
+      icon:'rest', tone:'info',
+      title:'Rest cadence',
+      text:`This session scheduled ${d.breaksScheduled} break${d.breaksScheduled>1?'s':''} across ${d.tests} questions. For sessions this size, spaced recovery protects the back half more than it costs in time — the data above on your final-third pace shows whether that traded off well.`
+    });
+  }
+
+  return out;
+}
+
+/* ============================================================
+   Events
+   ============================================================ */
+$('#beginBtn').addEventListener('click', beginSession);
+
+$('#doneBtn').addEventListener('click', () => {
+  if (state.phase !== 'focus' || state.isPaused) return;
+  finishQuestion({ skipped:false, timedOut:false });
+});
+
+$('#skipBtn').addEventListener('click', () => {
+  if (state.phase !== 'focus' || state.isPaused) return;
+  finishQuestion({ skipped:true, timedOut:false });
+});
+
+$('#pauseBtn').addEventListener('click', togglePause);
+
+$('#skipBreakBtn').addEventListener('click', () => {
+  if (state.phase !== 'break') return;
+  endBreak();
+});
+
+$('#skipReviewBtn').addEventListener('click', () => {
+  if (state.phase !== 'review') return;
+  endReview();
+});
+
+$('#restartBtn').addEventListener('click', () => {
+  clearInterval(state.tick);
+  state.tick = null;
+  state.records = [];
+  state.skipped = 0;
+  state.timeouts = 0;
+  state.totalBonus = 0;
+  state.bonus = 0;
+  showScreen('setup');
+  renderPreview();
+});
+
+/* ---------- Init ---------- */
+state.perTest = 60;
+renderPreview();
+
+/* ---------- PWA: service worker registration ---------- */
+if ('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
