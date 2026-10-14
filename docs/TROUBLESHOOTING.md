@@ -10,3 +10,8 @@ Confirm that the file path is correct and that the browser supports the features
 ## The timer seems stuck
 
 Check whether the timer is paused, whether the current session has already completed, and whether the expected action is available. Reproduce with a short session and record the state shown before and after each control.
+
+
+## The layout is clipped
+
+Record the viewport size and browser zoom, then check the setup screen, active timer, and report separately. Note whether the issue affects one control or the whole page and whether horizontal scrolling appears.
