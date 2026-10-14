@@ -35,3 +35,10 @@ Break previews are estimates based on the current configuration. Changing the se
 Use **Done** when you finish a question before the timer expires. Use **Skip** when you want to move on without marking the question as completed normally. The report records skipped and timed-out questions separately.
 
 The pause control is a limited allowance rather than an unlimited stop button. If you use a pause, wait for the interface to resume the timer before continuing your work. Avoid refreshing the page during a session because progress is not currently saved for recovery.
+
+
+## Break and review screens
+
+When a scheduled break begins, the app switches to a break screen and displays the remaining time. You can skip a break if you are ready to continue, but consider using the planned rest to stand up, change focus distance, or get a drink.
+
+After the focus phase, the review phase provides time to consolidate what you covered. Use the finish-review control when you are ready to view the report.
