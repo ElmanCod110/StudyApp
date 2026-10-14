@@ -20,3 +20,8 @@ If preferences or session state are persisted, list the exact keys and data fiel
 ## Explain local-device limits
 
 Data stored in a browser profile may be accessible to other people who use that profile or device. Do not describe local storage as encrypted or private from device users unless the implementation demonstrably provides those protections.
+
+
+## Document network requests
+
+Use the browser Network panel to inspect requests during launch and a complete session. Identify the destination and purpose of any non-local request, including requests added by future analytics, fonts, or integrations.
