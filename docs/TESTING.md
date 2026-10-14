@@ -30,3 +30,8 @@ Use a narrow mobile viewport and inspect setup, running timer, paused state, and
 ## Test keyboard operation
 
 Complete the main workflow without a mouse. Check focus order, focus visibility, activation keys, and whether focus remains predictable after a screen or state transition.
+
+
+## Test reload behavior
+
+Reload before a session, during a session, and after a completed session. Record which state is intentionally restored and which state is reset; do not assume persistence is guaranteed unless the app documents it.
