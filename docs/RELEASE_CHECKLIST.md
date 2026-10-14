@@ -25,3 +25,8 @@ Inspect setup, active timer, paused state, and report at a narrow viewport. Conf
 ## Update cache revision when needed
 
 If precached assets change, review the service-worker cache revision and update it when appropriate. Confirm that cleanup remains restricted to the app's cache namespace and that the shell can be populated successfully.
+
+
+## Verify install metadata
+
+When changing the manifest or icons, check that the name, start URL, scope, theme colors, and referenced image paths are consistent with the intended deployment location.
