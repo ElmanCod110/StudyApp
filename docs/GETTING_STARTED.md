@@ -35,3 +35,8 @@ Break intervals are intended to help structure a routine, not to enforce a rigid
 ## Review the session report
 
 When a session completes, read the report as a summary of the timer activity captured by the app. Interpret derived insights as lightweight prompts for reflection rather than scientific measurements of learning, attention, or performance.
+
+
+## Install the progressive web app
+
+When the app is served over a supported origin, use the browser's own install option if it is available. Installation prompts vary by browser and device, so the absence of a prompt does not necessarily mean the app is broken.
