@@ -20,3 +20,8 @@ Before starting, review the session settings and preset controls shown by the ap
 ## Run a short first session
 
 Choose a brief duration and start the session. Watch the displayed state as the focus period runs, then verify that the app transitions to the expected rest or completion state. This quick trial helps confirm that the controls make sense in your browser.
+
+
+## Pause and resume deliberately
+
+Use the pause control when you need to interrupt a session. Confirm that the interface communicates the paused state, then resume when you are ready. If you leave the tab in the background, return to it and check that the displayed time remains sensible.
