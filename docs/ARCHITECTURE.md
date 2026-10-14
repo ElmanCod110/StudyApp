@@ -20,3 +20,8 @@ The `sw.js` file installs a versioned cache, precaches the app shell assets, cle
 ## Keep paths deployment-aware
 
 The manifest and service worker use relative paths. When deploying under a subdirectory, check the start URL, scope, precache entries, and navigation fallback together rather than assuming the app lives at the origin root.
+
+
+## Separate UI from lifecycle behavior
+
+User-facing timer interactions belong to the application interface, while install and fetch lifecycle behavior belongs to the service worker and manifest configuration. When debugging, isolate whether the failure is in the timer UI, browser storage, network, or cache lifecycle.
