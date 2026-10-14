@@ -56,3 +56,12 @@ Interpret these insights as prompts for reflection, not diagnoses or guarantees 
 When hosted on HTTPS (or an eligible local development origin), the app can register its service worker and cache the main app shell. Depending on the browser, an install option may appear in the browser menu or address bar.
 
 For an offline check, open the app once while online, allow it to finish loading, and then try navigating to it after disconnecting. Browser installation and offline behavior vary by platform. An offline copy may not include resources that were never cached.
+
+
+## Troubleshooting
+
+- **The app opens but does not install:** confirm that you are using a supported browser and a secure origin, and check that the web app manifest and icons load.
+- **Offline launch does not work:** first open the app online, then confirm the service worker was registered in the browser's developer tools.
+- **An old interface keeps appearing:** the browser may still have an earlier service-worker cache. Reload after reconnecting and allow the updated worker to activate.
+- **The report is not what you expected:** check whether questions were completed, skipped, or timed out; the report distinguishes these outcomes.
+- **A session was lost after refresh:** session recovery is not implemented yet. Avoid refreshing during a long session until recovery is added.
