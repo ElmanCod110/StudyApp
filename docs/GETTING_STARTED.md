@@ -30,3 +30,8 @@ Use the pause control when you need to interrupt a session. Confirm that the int
 ## Use breaks as planning aids
 
 Break intervals are intended to help structure a routine, not to enforce a rigid schedule. Adjust the session plan to your needs, and do not treat a suggested break length as a medical or productivity prescription.
+
+
+## Review the session report
+
+When a session completes, read the report as a summary of the timer activity captured by the app. Interpret derived insights as lightweight prompts for reflection rather than scientific measurements of learning, attention, or performance.
