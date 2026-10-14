@@ -15,3 +15,8 @@ Check whether the timer is paused, whether the current session has already compl
 ## The layout is clipped
 
 Record the viewport size and browser zoom, then check the setup screen, active timer, and report separately. Note whether the issue affects one control or the whole page and whether horizontal scrolling appears.
+
+
+## Installation is unavailable
+
+Confirm that the app is served from an origin supported by the browser and that the manifest and icon paths load successfully. Install options differ by browser and operating system, so compare against that platform's normal install flow.
