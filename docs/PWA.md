@@ -20,3 +20,8 @@ Load the app while online so the browser can fetch the app shell and the service
 ## Install from the browser
 
 Use the browser's install action when available. Installation UI varies by platform; verify the app name, icon, and launch behavior rather than expecting every browser to show the same prompt.
+
+
+## Understand the cache revision
+
+The service worker uses an app-specific cache name with a revision suffix. When precached assets change in a release, update the revision so the new worker can populate a fresh cache and remove obsolete caches belonging to this app.
