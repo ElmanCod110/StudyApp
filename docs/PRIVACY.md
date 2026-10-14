@@ -40,3 +40,8 @@ Never place private API keys, passwords, or other server credentials in client-s
 ## Keep reports user-controlled
 
 If a report export feature is added, generate it locally where practical and clearly describe what fields are included. Do not upload a report or add remote synchronization without an explicit feature design and user-facing explanation.
+
+
+## Review privacy after changes
+
+Repeat the data-flow review when adding persistence, notifications, analytics, exports, or network features. Update this document only after verifying the changed behavior so the privacy notes remain aligned with the implementation.
