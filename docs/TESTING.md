@@ -40,3 +40,8 @@ Reload before a session, during a session, and after a completed session. Record
 ## Test offline behavior
 
 After one successful online load, disconnect the network and reload the app. Confirm the cached app shell is available, then note any feature that still requires network access. Restore connectivity after the test.
+
+
+## Capture a useful bug report
+
+Include the steps to reproduce, expected behavior, actual behavior, browser and device, online/offline state, and screenshots or console output when useful. Keep one issue focused on one reproducible problem.
