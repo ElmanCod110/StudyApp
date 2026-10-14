@@ -25,3 +25,8 @@ Data stored in a browser profile may be accessible to other people who use that 
 ## Document network requests
 
 Use the browser Network panel to inspect requests during launch and a complete session. Identify the destination and purpose of any non-local request, including requests added by future analytics, fonts, or integrations.
+
+
+## Handle clearing and reset
+
+Where the app saves user settings or session data, document how a user can clear it. A reset action should explain its scope and should not imply that browser-managed service-worker caches or unrelated site data were removed unless that is true.
