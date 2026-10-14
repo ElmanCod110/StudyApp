@@ -40,3 +40,8 @@ For a small static app, additional libraries and build steps increase maintenanc
 ## Document behavior at module boundaries
 
 When a new script or module is introduced, document its purpose, inputs, outputs, and relationship to the timer state. Prefer explicit responsibilities over hidden side effects shared across unrelated controls.
+
+
+## Keep this overview current
+
+Revise these notes when files are split, new persistence is introduced, a remote service is added, or the service-worker strategy changes. A short accurate map is more useful than a detailed diagram that no longer matches the code.
