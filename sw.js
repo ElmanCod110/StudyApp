@@ -1,4 +1,5 @@
-const CACHE_NAME = 'study-chrono-v2';
+const CACHE_PREFIX = "study-chrono-";
+const CACHE_NAME = `${CACHE_PREFIX}v2`;
 const ASSETS = [
   './',
   './index.html',
