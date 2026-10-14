@@ -1,4 +1,4 @@
-const CACHE_NAME = 'study-chrono-v1';
+const CACHE_NAME = 'study-chrono-v2';
 const ASSETS = [
   './',
   './index.html',
