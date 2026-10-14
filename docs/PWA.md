@@ -40,3 +40,8 @@ Verify that successful same-origin GET requests can be cached as intended and th
 ## Update without surprising users
 
 After deploying a new revision, test both an ordinary reload and an installed-app launch. Avoid a release strategy that silently interrupts an active timer; document any user action needed to load an update.
+
+
+## Diagnose a stale install
+
+If an installed copy appears outdated, check the active service worker, cache names, and network requests in developer tools. Record the cache revision and exact refresh steps before reporting a suspected cache bug.
