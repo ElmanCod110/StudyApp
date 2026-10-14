@@ -28,3 +28,10 @@ A target is a pacing guide: finishing early or timing out should be treated as s
 Study Chrono offers automatic and custom break planning. Automatic planning adjusts the number and spacing of breaks to the size of the session. Custom planning lets you choose how many tests occur between short breaks, the short-break length, how often a long break occurs, and its duration.
 
 Break previews are estimates based on the current configuration. Changing the session size or a break setting can change the schedule, so review the preview again before starting.
+
+
+## During a focus session
+
+Use **Done** when you finish a question before the timer expires. Use **Skip** when you want to move on without marking the question as completed normally. The report records skipped and timed-out questions separately.
+
+The pause control is a limited allowance rather than an unlimited stop button. If you use a pause, wait for the interface to resume the timer before continuing your work. Avoid refreshing the page during a session because progress is not currently saved for recovery.
