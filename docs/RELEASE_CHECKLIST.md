@@ -15,3 +15,8 @@ Run a short study session and exercise the core controls that the change may aff
 ## Review accessibility basics
 
 Check keyboard focus, accessible names for icon-only controls, reduced-motion behavior, text contrast, and the ability to understand state changes without relying only on color or animation.
+
+
+## Check small-screen layouts
+
+Inspect setup, active timer, paused state, and report at a narrow viewport. Confirm that controls remain usable, text is not clipped, and no unintended horizontal overflow is introduced.
