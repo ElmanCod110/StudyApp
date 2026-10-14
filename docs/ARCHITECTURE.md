@@ -35,3 +35,8 @@ The cache prefix and revision are part of the update strategy. Change the revisi
 ## Avoid unnecessary dependencies
 
 For a small static app, additional libraries and build steps increase maintenance. Introduce a dependency only when it solves a concrete need, and document how it is loaded and what happens when it is unavailable.
+
+
+## Document behavior at module boundaries
+
+When a new script or module is introduced, document its purpose, inputs, outputs, and relationship to the timer state. Prefer explicit responsibilities over hidden side effects shared across unrelated controls.
