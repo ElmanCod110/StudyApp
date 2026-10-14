@@ -35,3 +35,8 @@ Complete the main workflow without a mouse. Check focus order, focus visibility,
 ## Test reload behavior
 
 Reload before a session, during a session, and after a completed session. Record which state is intentionally restored and which state is reset; do not assume persistence is guaranteed unless the app documents it.
+
+
+## Test offline behavior
+
+After one successful online load, disconnect the network and reload the app. Confirm the cached app shell is available, then note any feature that still requires network access. Restore connectivity after the test.
