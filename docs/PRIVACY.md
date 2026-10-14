@@ -10,3 +10,8 @@ Review the browser code for local storage, IndexedDB, cookies, network requests,
 ## Separate app cache from user data
 
 The service-worker cache stores app resources so the shell can load offline. Treat that cache separately from preferences or session information: cached HTML and icons are not the same category as a user's personal study history.
+
+
+## Review browser storage
+
+If preferences or session state are persisted, list the exact keys and data fields, explain why each is needed, and define when it is updated or removed. Avoid storing information that the feature does not need.
