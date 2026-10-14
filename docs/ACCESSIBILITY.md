@@ -10,3 +10,8 @@ Reload the page and navigate through the interface using Tab, Shift+Tab, Enter, 
 ## Check focus visibility
 
 Every interactive element should show a clear focus indicator against the dark background. Verify that focus is not hidden behind overlays and that moving focus does not unexpectedly activate a control.
+
+
+## Verify input labels
+
+Check that every setup input has a programmatic label, not only placeholder text. The visible label should describe the field's purpose and remain available when the user enters a value.
