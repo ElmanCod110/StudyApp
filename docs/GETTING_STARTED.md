@@ -5,3 +5,8 @@ StudyApp, presented in the interface as **Study Chrono**, is a browser-based tim
 ## Quick start
 
 Start with a short session and learn the main controls before choosing a longer duration. For service-worker and installation features, serve the project from an HTTP(S) origin rather than relying on a file opened directly from disk.
+
+
+## Choose a way to open the app
+
+For a quick look, open `index.html` in a modern browser. To test installation and offline behavior, serve the folder from an HTTP(S) origin so the browser can register `sw.js`. A local development server is sufficient; no build step is documented as required by the current repository.
