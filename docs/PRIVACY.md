@@ -30,3 +30,8 @@ Use the browser Network panel to inspect requests during launch and a complete s
 ## Handle clearing and reset
 
 Where the app saves user settings or session data, document how a user can clear it. A reset action should explain its scope and should not imply that browser-managed service-worker caches or unrelated site data were removed unless that is true.
+
+
+## Avoid secrets in client code
+
+Never place private API keys, passwords, or other server credentials in client-side HTML or JavaScript. Anything delivered to a browser can be inspected by the person using it. Any future service integration should use an appropriate server-side boundary.
