@@ -25,3 +25,8 @@ Choose a brief duration and start the session. Watch the displayed state as the 
 ## Pause and resume deliberately
 
 Use the pause control when you need to interrupt a session. Confirm that the interface communicates the paused state, then resume when you are ready. If you leave the tab in the background, return to it and check that the displayed time remains sensible.
+
+
+## Use breaks as planning aids
+
+Break intervals are intended to help structure a routine, not to enforce a rigid schedule. Adjust the session plan to your needs, and do not treat a suggested break length as a medical or productivity prescription.
