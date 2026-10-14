@@ -25,3 +25,8 @@ Controls represented only by an icon need an accessible name that communicates t
 ## Avoid noisy live announcements
 
 A countdown that announces every second can make a screen reader difficult to use. Prefer announcing meaningful state transitions—such as paused, resumed, break started, or session completed—rather than every tick.
+
+
+## Test zoom and reflow
+
+Increase browser zoom and narrow the viewport. Confirm that setup controls, timer status, and report values remain available without requiring precise pointer movement or horizontal scrolling for ordinary reading.
