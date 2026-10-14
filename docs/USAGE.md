@@ -65,3 +65,18 @@ For an offline check, open the app once while online, allow it to finish loading
 - **An old interface keeps appearing:** the browser may still have an earlier service-worker cache. Reload after reconnecting and allow the updated worker to activate.
 - **The report is not what you expected:** check whether questions were completed, skipped, or timed out; the report distinguishes these outcomes.
 - **A session was lost after refresh:** session recovery is not implemented yet. Avoid refreshing during a long session until recovery is added.
+
+
+## Accessibility and manual checks
+
+You can navigate the visible controls with a keyboard and use browser zoom to enlarge the interface. If a control is difficult to focus, activate, or understand with assistive technology, note the browser and the affected control when reporting the problem.
+
+A quick manual pass before a release should cover:
+1. Start a short session and complete a question.
+2. Skip a question and confirm the report distinguishes it.
+3. Pause and resume using the available pause allowance.
+4. Reach a scheduled break and use the skip-break control.
+5. Finish review and start a new session.
+6. Load the app online, then check offline launch and cache update behavior.
+
+This checklist is descriptive; it does not imply that automated or manual tests have been run for a particular change.
