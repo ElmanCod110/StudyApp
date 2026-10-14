@@ -37,7 +37,7 @@ self.addEventListener('fetch', (event) => {
     if (request.mode === 'navigate') {
       try {
         const networkResponse = await fetch(request);
-        if (networkResponse.ok) {
+        if (networkResponse.ok && !networkResponse.redirected) {
           await cache.put('./index.html', networkResponse.clone());
         }
         return networkResponse;
@@ -50,7 +50,7 @@ self.addEventListener('fetch', (event) => {
     if (cached) return cached;
     try {
       const networkResponse = await fetch(request);
-      if (networkResponse.ok) {
+      if (networkResponse.ok && !networkResponse.redirected) {
         await cache.put(request, networkResponse.clone());
       }
       return networkResponse;
