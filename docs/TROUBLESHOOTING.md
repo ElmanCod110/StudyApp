@@ -30,3 +30,8 @@ First load the app successfully while online so its service worker can install a
 ## The installed app looks outdated
 
 Reload the app and inspect the active worker and app-specific cache revision. After an asset release, verify that the cache revision changed when required and that obsolete caches are limited to the app's own namespace.
+
+
+## Settings appear to reset
+
+Do not assume settings are persistent unless the current implementation explicitly saves them. Check whether the browser profile changed, site data was cleared, or storage is unavailable, and document the expected persistence behavior separately from the observed behavior.
