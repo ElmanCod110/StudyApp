@@ -15,3 +15,8 @@ Every interactive element should show a clear focus indicator against the dark b
 ## Verify input labels
 
 Check that every setup input has a programmatic label, not only placeholder text. The visible label should describe the field's purpose and remain available when the user enters a value.
+
+
+## Review icon-only controls
+
+Controls represented only by an icon need an accessible name that communicates their action. Confirm that the name changes when the action changes, such as switching between pause and resume.
