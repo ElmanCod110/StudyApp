@@ -30,3 +30,8 @@ If precached assets change, review the service-worker cache revision and update 
 ## Verify install metadata
 
 When changing the manifest or icons, check that the name, start URL, scope, theme colors, and referenced image paths are consistent with the intended deployment location.
+
+
+## Perform an offline smoke test
+
+After a successful online load, disconnect the network and try a navigation. Confirm the cached shell behavior, then reconnect and verify that normal navigation works again.
