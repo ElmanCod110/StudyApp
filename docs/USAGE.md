@@ -21,3 +21,10 @@ The preview beneath the setup options gives you an at-a-glance view of the plann
 The time presets set the target duration for each question. Select a duration that reflects the work you are practising rather than choosing the shortest option by default.
 
 A target is a pacing guide: finishing early or timing out should be treated as session information, not as a score by itself. You can use a short practice run to learn how the timer behaves before starting a longer session.
+
+
+## Break planning
+
+Study Chrono offers automatic and custom break planning. Automatic planning adjusts the number and spacing of breaks to the size of the session. Custom planning lets you choose how many tests occur between short breaks, the short-break length, how often a long break occurs, and its duration.
+
+Break previews are estimates based on the current configuration. Changing the session size or a break setting can change the schedule, so review the preview again before starting.
