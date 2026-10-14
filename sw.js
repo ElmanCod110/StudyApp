@@ -49,7 +49,11 @@ self.addEventListener('fetch', (event) => {
     const cached = await cache.match(request);
     if (cached) return cached;
     try {
-      return await fetch(request);
+      const networkResponse = await fetch(request);
+      if (networkResponse.ok) {
+        await cache.put(request, networkResponse.clone());
+      }
+      return networkResponse;
     } catch {
       return Response.error();
     }
