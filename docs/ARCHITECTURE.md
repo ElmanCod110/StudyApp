@@ -10,3 +10,8 @@ The `index.html` file contains the page markup and embedded styles and applicati
 ## Manifest role
 
 The `manifest.json` file provides the app name, short name, start URL, display mode, colors, orientation, and icon references used by supported browsers during installation.
+
+
+## Service-worker responsibilities
+
+The `sw.js` file installs a versioned cache, precaches the app shell assets, cleans up obsolete caches owned by the app, and handles eligible fetch requests. Keep cache ownership checks narrow so unrelated caches on the same origin are not removed.
