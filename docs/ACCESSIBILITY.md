@@ -35,3 +35,8 @@ Increase browser zoom and narrow the viewport. Confirm that setup controls, time
 ## Respect reduced motion
 
 When the operating system requests reduced motion, non-essential animated rings and transitions should be reduced or removed. Ensure that state changes remain understandable without animation.
+
+
+## Record reproducible findings
+
+For an accessibility issue, include the browser and operating system, the control involved, the keyboard or assistive-technology steps, the observed result, and the expected result. Avoid reporting a criterion as broken unless you can reproduce it.
