@@ -15,3 +15,8 @@ The service-worker cache stores app resources so the shell can load offline. Tre
 ## Review browser storage
 
 If preferences or session state are persisted, list the exact keys and data fields, explain why each is needed, and define when it is updated or removed. Avoid storing information that the feature does not need.
+
+
+## Explain local-device limits
+
+Data stored in a browser profile may be accessible to other people who use that profile or device. Do not describe local storage as encrypted or private from device users unless the implementation demonstrably provides those protections.
