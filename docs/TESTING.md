@@ -20,3 +20,8 @@ Run a short session and observe start, pause, resume, break, skip, and completio
 ## Test boundary values
 
 Try the smallest allowed values and any documented upper bounds. Empty, non-numeric, or out-of-range input should not create a negative or unusable duration; record the exact input if behavior differs from expectations.
+
+
+## Test narrow layouts
+
+Use a narrow mobile viewport and inspect setup, running timer, paused state, and final report. Check for clipped controls, overlapping labels, unreadable values, and horizontal overflow.
