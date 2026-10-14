@@ -20,3 +20,8 @@ Check keyboard focus, accessible names for icon-only controls, reduced-motion be
 ## Check small-screen layouts
 
 Inspect setup, active timer, paused state, and report at a narrow viewport. Confirm that controls remain usable, text is not clipped, and no unintended horizontal overflow is introduced.
+
+
+## Update cache revision when needed
+
+If precached assets change, review the service-worker cache revision and update it when appropriate. Confirm that cleanup remains restricted to the app's cache namespace and that the shell can be populated successfully.
