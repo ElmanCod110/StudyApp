@@ -15,3 +15,8 @@ The `manifest.json` file provides the app name, short name, start URL, display m
 ## Service-worker responsibilities
 
 The `sw.js` file installs a versioned cache, precaches the app shell assets, cleans up obsolete caches owned by the app, and handles eligible fetch requests. Keep cache ownership checks narrow so unrelated caches on the same origin are not removed.
+
+
+## Keep paths deployment-aware
+
+The manifest and service worker use relative paths. When deploying under a subdirectory, check the start URL, scope, precache entries, and navigation fallback together rather than assuming the app lives at the origin root.
