@@ -10,3 +10,8 @@ Start with a short session and learn the main controls before choosing a longer 
 ## Choose a way to open the app
 
 For a quick look, open `index.html` in a modern browser. To test installation and offline behavior, serve the folder from an HTTP(S) origin so the browser can register `sw.js`. A local development server is sufficient; no build step is documented as required by the current repository.
+
+
+## Understand the setup screen
+
+Before starting, review the session settings and preset controls shown by the app. Use a short test session first so you can learn how the timer advances before relying on a longer study block.
