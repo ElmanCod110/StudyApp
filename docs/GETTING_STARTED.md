@@ -15,3 +15,8 @@ For a quick look, open `index.html` in a modern browser. To test installation an
 ## Understand the setup screen
 
 Before starting, review the session settings and preset controls shown by the app. Use a short test session first so you can learn how the timer advances before relying on a longer study block.
+
+
+## Run a short first session
+
+Choose a brief duration and start the session. Watch the displayed state as the focus period runs, then verify that the app transitions to the expected rest or completion state. This quick trial helps confirm that the controls make sense in your browser.
