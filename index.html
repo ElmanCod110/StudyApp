@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0a0a0d">
+<meta name="description" content="Timed study practice with adaptive breaks and a session report.">
+<meta name="color-scheme" content="dark">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -394,15 +396,27 @@ body::before{
 .insight-title{font-size:13px;font-weight:600;color:var(--text);letter-spacing:-0.005em}
 .insight-text{font-size:12.5px;line-height:1.5;color:var(--muted)}
 
+/* Keep keyboard focus visible without changing pointer interactions. */
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+button:focus-visible,input:focus-visible{outline-offset:3px}
+
 @media (max-width:420px){
   .metrics{grid-template-columns:repeat(2,1fr)}
   .timer-time{font-size:54px}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    scroll-behavior:auto!important;
+    animation-duration:0.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:0.01ms!important;
+  }
 }
 </style>
 </head>
 <body>
 
-<div class="pause-banner" id="pauseBanner">
+<div class="pause-banner" id="pauseBanner" role="status" aria-live="polite" aria-atomic="true">
   <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
   <span id="pauseBannerText">Paused</span>
 </div>
@@ -426,7 +440,7 @@ body::before{
 
     <div class="config-card">
       <div class="cfg-row">
-        <label>Number of tests</label>
+        <label for="inpTests">Number of tests</label>
         <div class="cfg-input">
           <input type="number" id="inpTests" value="200" min="1" max="5000" inputmode="numeric">
         </div>
@@ -434,10 +448,10 @@ body::before{
       <div class="cfg-row">
         <label>Seconds per test</label>
         <div class="preset-row">
-          <button class="preset" data-sec="30">30s</button>
-          <button class="preset active" data-sec="60">60s</button>
-          <button class="preset" data-sec="90">90s</button>
-          <button class="preset" data-sec="120">2m</button>
+          <button type="button" class="preset" data-sec="30">30s</button>
+          <button type="button" class="preset active" data-sec="60">60s</button>
+          <button type="button" class="preset" data-sec="90">90s</button>
+          <button type="button" class="preset" data-sec="120">2m</button>
         </div>
       </div>
     </div>
@@ -452,8 +466,8 @@ body::before{
           </div>
         </div>
         <div class="mode-switch">
-          <button class="mode-btn active" data-mode="auto">Auto</button>
-          <button class="mode-btn" data-mode="custom">Custom</button>
+          <button type="button" class="mode-btn active" data-mode="auto">Auto</button>
+          <button type="button" class="mode-btn" data-mode="custom">Custom</button>
         </div>
       </div>
 
@@ -467,33 +481,33 @@ body::before{
         <div class="mini-row">
           <span class="mini-label">Tests between short breaks</span>
           <div class="stepper">
-            <button data-adj="shortEvery" data-d="-5">–</button>
+            <button type="button" data-adj="shortEvery" data-d="-5" aria-label="Decrease tests between short breaks">–</button>
             <span id="valShortEvery">40</span>
-            <button data-adj="shortEvery" data-d="5">+</button>
+            <button type="button" data-adj="shortEvery" data-d="5" aria-label="Increase tests between short breaks">+</button>
           </div>
         </div>
         <div class="mini-row">
           <span class="mini-label">Short break length (min)</span>
           <div class="stepper">
-            <button data-adj="shortLen" data-d="-1">–</button>
+            <button type="button" data-adj="shortLen" data-d="-1" aria-label="Decrease short break length">–</button>
             <span id="valShortLen">5</span>
-            <button data-adj="shortLen" data-d="1">+</button>
+            <button type="button" data-adj="shortLen" data-d="1" aria-label="Increase short break length">+</button>
           </div>
         </div>
         <div class="mini-row">
           <span class="mini-label">Long break every N short breaks</span>
           <div class="stepper">
-            <button data-adj="longEvery" data-d="-1">–</button>
+            <button type="button" data-adj="longEvery" data-d="-1" aria-label="Decrease frequency of long breaks">–</button>
             <span id="valLongEvery">3</span>
-            <button data-adj="longEvery" data-d="1">+</button>
+            <button type="button" data-adj="longEvery" data-d="1" aria-label="Increase frequency of long breaks">+</button>
           </div>
         </div>
         <div class="mini-row">
           <span class="mini-label">Long break length (min)</span>
           <div class="stepper">
-            <button data-adj="longLen" data-d="-5">–</button>
+            <button type="button" data-adj="longLen" data-d="-5" aria-label="Decrease long break length">–</button>
             <span id="valLongLen">20</span>
-            <button data-adj="longLen" data-d="5">+</button>
+            <button type="button" data-adj="longLen" data-d="5" aria-label="Increase long break length">+</button>
           </div>
         </div>
       </div>
@@ -504,7 +518,7 @@ body::before{
       </div>
     </div>
 
-    <button class="btn-primary" id="beginBtn">
+    <button class="btn-primary" id="beginBtn" type="button">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
         <path d="M6 4l14 8-14 8z"/>
       </svg>
@@ -536,19 +550,19 @@ body::before{
     </div>
 
     <div class="actions">
-      <button class="act act-skip" id="skipBtn">
+      <button class="act act-skip" id="skipBtn" type="button" aria-label="Skip current question">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <path d="M5 4l10 8-10 8z"/><path d="M19 4v16"/>
         </svg>
         Skip
       </button>
-      <button class="act act-pause" id="pauseBtn" title="Pause">
+      <button class="act act-pause" id="pauseBtn" type="button" aria-label="Pause session" title="Pause">
         <div>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
           <div class="pause-dots" id="pauseDots"></div>
         </div>
       </button>
-      <button class="act act-done" id="doneBtn">
+      <button class="act act-done" id="doneBtn" type="button" aria-label="Mark current question done">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <path d="M5 12l5 5 9-11"/>
         </svg>
@@ -578,7 +592,7 @@ body::before{
     <div class="break-msg" id="breakMsg">Stand up, look far away, hydrate.</div>
 
     <div class="actions">
-      <button class="act act-skip" id="skipBreakBtn">
+      <button class="act act-skip" id="skipBreakBtn" type="button">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <path d="M5 4l10 8-10 8z"/><path d="M19 4v16"/>
         </svg>
@@ -607,7 +621,7 @@ body::before{
     <div class="break-msg">Consolidation is where memory forms.</div>
 
     <div class="actions">
-      <button class="act act-done" id="skipReviewBtn">
+      <button class="act act-done" id="skipReviewBtn" type="button">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <path d="M5 12l5 5 9-11"/>
         </svg>
@@ -639,7 +653,7 @@ body::before{
       <div class="insights" id="insights" style="margin-top:9px"></div>
     </div>
 
-    <button class="btn-primary" id="restartBtn">
+    <button class="btn-primary" id="restartBtn" type="button">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/>
       </svg>
