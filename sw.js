@@ -31,15 +31,27 @@ self.addEventListener('fetch', (event) => {
   const requestUrl = new URL(request.url);
   if (request.method !== 'GET' || requestUrl.origin !== self.location.origin) return;
 
-  event.respondWith(
-    caches.open(CACHE_NAME).then((cache) =>
-      cache.match(request).then((cached) => {
-        if (cached) return cached;
-        return fetch(request).catch(() => {
-          if (request.mode === 'navigate') return cache.match('./index.html');
-          return Response.error();
-        });
-      })
-    )
-  );
+  event.respondWith((async () => {
+    const cache = await caches.open(CACHE_NAME);
+
+    if (request.mode === 'navigate') {
+      try {
+        const networkResponse = await fetch(request);
+        if (networkResponse.ok) {
+          await cache.put('./index.html', networkResponse.clone());
+        }
+        return networkResponse;
+      } catch {
+        return (await cache.match('./index.html')) || Response.error();
+      }
+    }
+
+    const cached = await cache.match(request);
+    if (cached) return cached;
+    try {
+      return await fetch(request);
+    } catch {
+      return Response.error();
+    }
+  })());
 });
