@@ -35,3 +35,8 @@ With the app already cached, test a navigation while offline. The intended fallb
 ## Check asset requests
 
 Verify that successful same-origin GET requests can be cached as intended and that cross-origin or non-GET requests are not handled as app-shell navigations. Use browser developer tools to inspect request and cache behavior.
+
+
+## Update without surprising users
+
+After deploying a new revision, test both an ordinary reload and an installed-app launch. Avoid a release strategy that silently interrupts an active timer; document any user action needed to load an update.
