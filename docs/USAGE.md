@@ -49,3 +49,10 @@ After the focus phase, the review phase provides time to consolidate what you co
 The report summarizes elapsed time, pace, skipped items, timeouts, and time reclaimed by finishing questions early. Its insight cards are generated from the session's timing data and configuration.
 
 Interpret these insights as prompts for reflection, not diagnoses or guarantees about learning. For example, a faster final third may reflect growing familiarity, while a slower finish may indicate that the schedule deserves adjustment. Consider context before changing your study habits.
+
+
+## Install and use offline
+
+When hosted on HTTPS (or an eligible local development origin), the app can register its service worker and cache the main app shell. Depending on the browser, an install option may appear in the browser menu or address bar.
+
+For an offline check, open the app once while online, allow it to finish loading, and then try navigating to it after disconnecting. Browser installation and offline behavior vary by platform. An offline copy may not include resources that were never cached.
