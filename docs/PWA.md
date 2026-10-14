@@ -15,3 +15,8 @@ The manifest defines the app's name, launch URL, display mode, theme colors, and
 ## First installation visit
 
 Load the app while online so the browser can fetch the app shell and the service worker can populate its cache. A first-time offline visit cannot cache files that have never been downloaded.
+
+
+## Install from the browser
+
+Use the browser's install action when available. Installation UI varies by platform; verify the app name, icon, and launch behavior rather than expecting every browser to show the same prompt.
