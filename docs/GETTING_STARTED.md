@@ -40,3 +40,8 @@ When a session completes, read the report as a summary of the timer activity cap
 ## Install the progressive web app
 
 When the app is served over a supported origin, use the browser's own install option if it is available. Installation prompts vary by browser and device, so the absence of a prompt does not necessarily mean the app is broken.
+
+
+## Know the offline boundary
+
+The service worker precaches the app shell and attempts to serve it when a navigation cannot reach the network. Offline behavior depends on the cache having been populated successfully at least once. A first visit while offline cannot download assets that were never cached.
