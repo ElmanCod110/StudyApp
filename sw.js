@@ -35,7 +35,10 @@ self.addEventListener('fetch', (event) => {
     caches.open(CACHE_NAME).then((cache) =>
       cache.match(request).then((cached) => {
         if (cached) return cached;
-        return fetch(request).catch(() => caches.match('./index.html'));
+        return fetch(request).catch(() => {
+          if (request.mode === 'navigate') return cache.match('./index.html');
+          return Response.error();
+        });
       })
     )
   );
