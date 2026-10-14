@@ -5,3 +5,8 @@ This guide provides a practical checklist for reviewing StudyApp's interface wit
 ## Start with keyboard-only use
 
 Reload the page and navigate through the interface using Tab, Shift+Tab, Enter, Space, and arrow keys where appropriate. Confirm that focus is visible and the current control can be identified without a mouse.
+
+
+## Check focus visibility
+
+Every interactive element should show a clear focus indicator against the dark background. Verify that focus is not hidden behind overlays and that moving focus does not unexpectedly activate a control.
