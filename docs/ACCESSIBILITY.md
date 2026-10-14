@@ -30,3 +30,8 @@ A countdown that announces every second can make a screen reader difficult to us
 ## Test zoom and reflow
 
 Increase browser zoom and narrow the viewport. Confirm that setup controls, timer status, and report values remain available without requiring precise pointer movement or horizontal scrolling for ordinary reading.
+
+
+## Respect reduced motion
+
+When the operating system requests reduced motion, non-essential animated rings and transitions should be reduced or removed. Ensure that state changes remain understandable without animation.
