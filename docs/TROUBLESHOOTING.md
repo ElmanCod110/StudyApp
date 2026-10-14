@@ -20,3 +20,8 @@ Record the viewport size and browser zoom, then check the setup screen, active t
 ## Installation is unavailable
 
 Confirm that the app is served from an origin supported by the browser and that the manifest and icon paths load successfully. Install options differ by browser and operating system, so compare against that platform's normal install flow.
+
+
+## Offline launch fails
+
+First load the app successfully while online so its service worker can install and cache the shell. Then check whether the service worker is active and whether its precache requests succeeded. A cache cannot supply files that were never stored.
