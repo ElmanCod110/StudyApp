@@ -398,7 +398,7 @@ body::before{
   .metrics{grid-template-columns:repeat(2,1fr)}
   .timer-time{font-size:54px}
 }
-</style>
+@media (prefers-reduced-motion: reduce){\n  *,*::before,*::after{\n    scroll-behavior:auto!important;\n    animation-duration:0.01ms!important;\n    animation-iteration-count:1!important;\n    transition-duration:0.01ms!important;\n  }\n}\n</style>
 </head>
 <body>
 
