@@ -394,7 +394,7 @@ body::before{
 .insight-title{font-size:13px;font-weight:600;color:var(--text);letter-spacing:-0.005em}
 .insight-text{font-size:12.5px;line-height:1.5;color:var(--muted)}
 
-@media (max-width:420px){
+/* Keep keyboard focus visible without changing pointer interactions. */\n:focus-visible{outline:2px solid var(--accent);outline-offset:3px}\nbutton:focus-visible,input:focus-visible{outline-offset:3px}\n\n@media (max-width:420px){
   .metrics{grid-template-columns:repeat(2,1fr)}
   .timer-time{font-size:54px}
 }
