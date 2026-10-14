@@ -25,3 +25,8 @@ Try the smallest allowed values and any documented upper bounds. Empty, non-nume
 ## Test narrow layouts
 
 Use a narrow mobile viewport and inspect setup, running timer, paused state, and final report. Check for clipped controls, overlapping labels, unreadable values, and horizontal overflow.
+
+
+## Test keyboard operation
+
+Complete the main workflow without a mouse. Check focus order, focus visibility, activation keys, and whether focus remains predictable after a screen or state transition.
