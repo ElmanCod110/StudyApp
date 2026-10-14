@@ -35,3 +35,8 @@ Where the app saves user settings or session data, document how a user can clear
 ## Avoid secrets in client code
 
 Never place private API keys, passwords, or other server credentials in client-side HTML or JavaScript. Anything delivered to a browser can be inspected by the person using it. Any future service integration should use an appropriate server-side boundary.
+
+
+## Keep reports user-controlled
+
+If a report export feature is added, generate it locally where practical and clearly describe what fields are included. Do not upload a report or add remote synchronization without an explicit feature design and user-facing explanation.
