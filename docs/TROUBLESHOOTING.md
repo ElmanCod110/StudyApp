@@ -25,3 +25,8 @@ Confirm that the app is served from an origin supported by the browser and that 
 ## Offline launch fails
 
 First load the app successfully while online so its service worker can install and cache the shell. Then check whether the service worker is active and whether its precache requests succeeded. A cache cannot supply files that were never stored.
+
+
+## The installed app looks outdated
+
+Reload the app and inspect the active worker and app-specific cache revision. After an asset release, verify that the cache revision changed when required and that obsolete caches are limited to the app's own namespace.
