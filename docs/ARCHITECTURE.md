@@ -5,3 +5,8 @@ StudyApp is a small browser application whose main interface and styling live in
 ## Main application entry point
 
 The `index.html` file contains the page markup and embedded styles and application logic. When making a change, identify the relevant section first and keep the edit scoped to the behavior or component being changed.
+
+
+## Manifest role
+
+The `manifest.json` file provides the app name, short name, start URL, display mode, colors, orientation, and icon references used by supported browsers during installation.
