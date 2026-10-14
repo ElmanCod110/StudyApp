@@ -10,3 +10,8 @@ Open the app in a modern browser and confirm that the initial screen renders wit
 ## Test session setup
 
 Change the available session settings and select a preset if one is offered. Confirm that displayed values match the chosen configuration before starting the timer.
+
+
+## Test timer transitions
+
+Run a short session and observe start, pause, resume, break, skip, and completion paths where supported by the interface. Check that the visible state and available action remain consistent after each transition.
