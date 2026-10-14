@@ -14,3 +14,10 @@ Open `index.html` in a modern browser. For the full Progressive Web App (PWA) ex
 On the setup screen, choose the number of tests for the session. The field accepts values from 1 to 5,000. Use a smaller number when learning the controls or trying a new schedule; a long session is not automatically a better session.
 
 The preview beneath the setup options gives you an at-a-glance view of the planned session structure. Check the estimate before beginning, especially when using custom breaks.
+
+
+## Choose a time preset
+
+The time presets set the target duration for each question. Select a duration that reflects the work you are practising rather than choosing the shortest option by default.
+
+A target is a pacing guide: finishing early or timing out should be treated as session information, not as a score by itself. You can use a short practice run to learn how the timer behaves before starting a longer session.
