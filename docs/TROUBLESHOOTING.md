@@ -35,3 +35,8 @@ Reload the app and inspect the active worker and app-specific cache revision. Af
 ## Settings appear to reset
 
 Do not assume settings are persistent unless the current implementation explicitly saves them. Check whether the browser profile changed, site data was cleared, or storage is unavailable, and document the expected persistence behavior separately from the observed behavior.
+
+
+## Prepare a useful report
+
+Include the exact steps, expected and actual results, browser and device, viewport size, network state, whether the app is installed, and any relevant console message. Remove secrets or personal information from screenshots and logs before sharing them.
