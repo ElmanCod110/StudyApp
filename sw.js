@@ -32,9 +32,11 @@ self.addEventListener('fetch', (event) => {
   if (request.method !== 'GET' || requestUrl.origin !== self.location.origin) return;
 
   event.respondWith(
-    caches.match(request).then((cached) => {
-      if (cached) return cached;
-      return fetch(request).catch(() => caches.match('./index.html'));
-    })
+    caches.open(CACHE_NAME).then((cache) =>
+      cache.match(request).then((cached) => {
+        if (cached) return cached;
+        return fetch(request).catch(() => caches.match('./index.html'));
+      })
+    )
   );
 });
