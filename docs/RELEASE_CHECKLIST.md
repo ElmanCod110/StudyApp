@@ -10,3 +10,8 @@ Confirm which files changed and why. Keep the release focused, remove accidental
 ## Check the main workflow
 
 Run a short study session and exercise the core controls that the change may affect. Verify the expected state transitions and read the final report if the change touches session completion.
+
+
+## Review accessibility basics
+
+Check keyboard focus, accessible names for icon-only controls, reduced-motion behavior, text contrast, and the ability to understand state changes without relying only on color or animation.
