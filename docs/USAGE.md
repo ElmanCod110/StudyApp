@@ -42,3 +42,10 @@ The pause control is a limited allowance rather than an unlimited stop button. I
 When a scheduled break begins, the app switches to a break screen and displays the remaining time. You can skip a break if you are ready to continue, but consider using the planned rest to stand up, change focus distance, or get a drink.
 
 After the focus phase, the review phase provides time to consolidate what you covered. Use the finish-review control when you are ready to view the report.
+
+
+## Read the session report
+
+The report summarizes elapsed time, pace, skipped items, timeouts, and time reclaimed by finishing questions early. Its insight cards are generated from the session's timing data and configuration.
+
+Interpret these insights as prompts for reflection, not diagnoses or guarantees about learning. For example, a faster final third may reflect growing familiarity, while a slower finish may indicate that the schedule deserves adjustment. Consider context before changing your study habits.
