@@ -25,3 +25,8 @@ Use the browser's install action when available. Installation UI varies by platf
 ## Understand the cache revision
 
 The service worker uses an app-specific cache name with a revision suffix. When precached assets change in a release, update the revision so the new worker can populate a fresh cache and remove obsolete caches belonging to this app.
+
+
+## Check navigation fallback
+
+With the app already cached, test a navigation while offline. The intended fallback is the cached app shell for navigation requests, not returning the HTML shell for every failed asset request.
