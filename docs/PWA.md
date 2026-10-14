@@ -30,3 +30,8 @@ The service worker uses an app-specific cache name with a revision suffix. When 
 ## Check navigation fallback
 
 With the app already cached, test a navigation while offline. The intended fallback is the cached app shell for navigation requests, not returning the HTML shell for every failed asset request.
+
+
+## Check asset requests
+
+Verify that successful same-origin GET requests can be cached as intended and that cross-origin or non-GET requests are not handled as app-shell navigations. Use browser developer tools to inspect request and cache behavior.
