@@ -35,3 +35,8 @@ When changing the manifest or icons, check that the name, start URL, scope, them
 ## Perform an offline smoke test
 
 After a successful online load, disconnect the network and try a navigation. Confirm the cached shell behavior, then reconnect and verify that normal navigation works again.
+
+
+## Record release limitations
+
+Document known issues, browser-dependent behavior, and checks that could not be performed. Do not describe a manual or automated test as passing unless it was actually run and observed.
