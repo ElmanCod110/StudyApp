@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0a0a0d">\n<meta name="description" content="Timed study practice with adaptive breaks and a session report.">\n<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a0a0d">
+<meta name="description" content="Timed study practice with adaptive breaks and a session report.">
+<meta name="color-scheme" content="dark">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -394,11 +396,23 @@ body::before{
 .insight-title{font-size:13px;font-weight:600;color:var(--text);letter-spacing:-0.005em}
 .insight-text{font-size:12.5px;line-height:1.5;color:var(--muted)}
 
-/* Keep keyboard focus visible without changing pointer interactions. */\n:focus-visible{outline:2px solid var(--accent);outline-offset:3px}\nbutton:focus-visible,input:focus-visible{outline-offset:3px}\n\n@media (max-width:420px){
+/* Keep keyboard focus visible without changing pointer interactions. */
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+button:focus-visible,input:focus-visible{outline-offset:3px}
+
+@media (max-width:420px){
   .metrics{grid-template-columns:repeat(2,1fr)}
   .timer-time{font-size:54px}
 }
-@media (prefers-reduced-motion: reduce){\n  *,*::before,*::after{\n    scroll-behavior:auto!important;\n    animation-duration:0.01ms!important;\n    animation-iteration-count:1!important;\n    transition-duration:0.01ms!important;\n  }\n}\n</style>
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    scroll-behavior:auto!important;
+    animation-duration:0.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:0.01ms!important;
+  }
+}
+</style>
 </head>
 <body>
 
