@@ -30,3 +30,8 @@ User-facing timer interactions belong to the application interface, while instal
 ## Treat cache names as an interface
 
 The cache prefix and revision are part of the update strategy. Change the revision when precached content changes, and make cleanup remove only older caches with the app's own prefix.
+
+
+## Avoid unnecessary dependencies
+
+For a small static app, additional libraries and build steps increase maintenance. Introduce a dependency only when it solves a concrete need, and document how it is loaded and what happens when it is unavailable.
