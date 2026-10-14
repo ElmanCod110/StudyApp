@@ -45,3 +45,8 @@ When the app is served over a supported origin, use the browser's own install op
 ## Know the offline boundary
 
 The service worker precaches the app shell and attempts to serve it when a navigation cannot reach the network. Offline behavior depends on the cache having been populated successfully at least once. A first visit while offline cannot download assets that were never cached.
+
+
+## Recover from a confusing state
+
+If the interface appears stale after an update, reload the page and retry a short session. For persistent problems, record the browser, whether the app is installed, whether the network is offline, and the steps that reproduce the issue before opening a bug report.
